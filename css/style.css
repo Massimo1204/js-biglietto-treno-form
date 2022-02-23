@@ -2,6 +2,10 @@ body{
     background-color: brown;
 }
 
-.height-450{
-    height: 450px;
+#seleziona-eta{
+    left: 50%;
+    transform: translateX(-50%);
+}
+#seleziona-eta:hover{
+    cursor: pointer;
 }
