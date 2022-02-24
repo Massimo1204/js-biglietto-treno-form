@@ -3,6 +3,7 @@ let price;
 let age;
 let discount;
 let distance;
+const namePassenger = document.getElementById('nome-cognome');
 const ageButton = document.getElementById("eta");
 const ageSelector = document.getElementById("seleziona-eta");
 const underAge = document.getElementById("minorenne");
@@ -11,6 +12,7 @@ const overAge = document.getElementById("over-65");
 const ticket = document.getElementById("my-ticket");
 const generate = document.getElementById('genera');
 const annull = document.getElementById('annulla');
+const incorrectData = document.getElementById('warning');
 
 ageButton.addEventListener('click', function(){
     ageSelector.classList.remove('d-none');
@@ -39,19 +41,41 @@ overAge.addEventListener('click' , function(){
 });
 
 generate.addEventListener('click', function(){
-    distance = parseFloat(document.getElementById('distanza').value);
-    document.getElementById('nome-biglietto').innerHTML = document.getElementById('nome-cognome').value;
-    ticket.classList.remove('d-none');
-    if(age == "Minorenne"){
+    distance = document.getElementById('distanza').value;
+    incorrectData.classList.add('d-none');
+
+    if(!/^[a-zA-Z\s]+$/.test(namePassenger.value) || isNaN(distance) || distance==''){
+        incorrectData.classList.remove('d-none');
+        ticket.classList.add('d-none');
+    }
+    else if(age == "Minorenne"){
         price = distance * 0.27 * discount;
+        document.getElementById('costo').innerHTML = price.toFixed(2) ;
+        document.getElementById('nome-biglietto').innerHTML = namePassenger.value;
+        ticket.classList.remove('d-none');
     }
     else if(age == "Over 65"){
         price = distance * 0.27 * discount;
+        document.getElementById('costo').innerHTML = price.toFixed(2) ;
+        document.getElementById('nome-biglietto').innerHTML = namePassenger.value;
+        ticket.classList.remove('d-none');
+    }
+    else if( age == "Maggiorenne" ){
+        price = distance * 0.27 * discount;
+        document.getElementById('costo').innerHTML = price.toFixed(2) ;
+        document.getElementById('nome-biglietto').innerHTML = namePassenger.value;
+        ticket.classList.remove('d-none');
     }
     else{
+        age = "Maggiorenne";    
+        discount = 1;
+        document.getElementById("eta").innerHTML = age;
+        document.getElementById("offerta").innerHTML = "Biglietto Stardard";
         price = distance * 0.27 * discount;
+        document.getElementById('costo').innerHTML = price.toFixed(2) ;
+        document.getElementById('nome-biglietto').innerHTML = namePassenger.value;
+        ticket.classList.remove('d-none');
     }
-    document.getElementById('costo').innerHTML = price.toFixed(2) ;
 
     document.getElementById("carrozza").innerHTML = Math.floor(Math.random() * 10);
     document.getElementById("codice-cp").innerHTML = Math.floor(Math.random() * 100000);
@@ -64,5 +88,7 @@ annull.addEventListener('click', function(){
     age = '';
     distance = '';
     ticket.classList.add('d-none');
+    incorrectData.classList.add('d-none');
+
 });
 
